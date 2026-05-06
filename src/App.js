@@ -1,23 +1,31 @@
 import logo from './logo.svg';
 import './App.css';
+import Test from './test1';
+import KendoGrid from './Kendo';
+import { useEffect, useState } from "react";
 
 function App() {
+	var model=[{
+		Id:1,
+		Name:"Rahul"	
+	},
+	{
+		Id:2,
+		Name:"Ashish"
+	}];
+	  const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        fetch("http://10.66.48.80:3000/api/users")
+            .then(response => response.json())
+            .then(data => setUsers(data))
+            .catch(error => console.error("Error:", error));
+    }, []);
+			
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <KendoGrid data={users}/>
+
     </div>
   );
 }
